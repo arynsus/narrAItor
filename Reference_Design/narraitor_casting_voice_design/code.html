@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>narrAItor - Casting Suite</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error": "#a83836",
+                      "primary-fixed-dim": "#c1d8e4",
+                      "on-error-container": "#6e0a12",
+                      "on-surface": "#2f3332",
+                      "on-primary-fixed": "#2d424c",
+                      "on-primary-container": "#40555f",
+                      "primary-container": "#cfe6f2",
+                      "inverse-primary": "#d8effb",
+                      "surface-tint": "#4d626c",
+                      "surface-dim": "#d7dbd8",
+                      "secondary-fixed": "#d2e5f7",
+                      "inverse-surface": "#0d0f0e",
+                      "surface-container-highest": "#e0e3e0",
+                      "secondary": "#4f6171",
+                      "tertiary-dim": "#5c5241",
+                      "on-tertiary": "#fff8f1",
+                      "on-error": "#fff7f6",
+                      "on-tertiary-fixed-variant": "#6e6351",
+                      "on-secondary-fixed-variant": "#4c5d6d",
+                      "on-surface-variant": "#5c605e",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary": "#695e4c",
+                      "on-primary-fixed-variant": "#495f69",
+                      "tertiary-fixed": "#ffeed8",
+                      "error-container": "#fa746f",
+                      "on-secondary-container": "#425463",
+                      "tertiary-fixed-dim": "#f0e0cb",
+                      "surface": "#f9f9f7",
+                      "surface-container-high": "#e6e9e6",
+                      "on-secondary-fixed": "#304150",
+                      "on-tertiary-container": "#635948",
+                      "secondary-fixed-dim": "#c4d7e9",
+                      "on-primary": "#f2faff",
+                      "secondary-container": "#d2e5f7",
+                      "outline": "#777c79",
+                      "on-tertiary-fixed": "#514737",
+                      "on-secondary": "#f6f9ff",
+                      "surface-container": "#eceeec",
+                      "surface-bright": "#f9f9f7",
+                      "on-background": "#2f3332",
+                      "surface-variant": "#e0e3e0",
+                      "secondary-dim": "#445564",
+                      "outline-variant": "#afb3b0",
+                      "tertiary-container": "#ffeed8",
+                      "background": "#f9f9f7",
+                      "inverse-on-surface": "#9c9d9b",
+                      "primary": "#4d626c",
+                      "error-dim": "#67040d",
+                      "surface-container-low": "#f3f4f2",
+                      "primary-dim": "#415660",
+                      "primary-fixed": "#cfe6f2"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Manrope"],
+                      "body": ["Manrope"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; -webkit-font-smoothing: antialiased; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+        .glass-nav { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .nordic-drift { transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .fade-mist { mask-image: linear-gradient(to bottom, black 80%, transparent 100%); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-xl font-manrope text-base tracking-tight shadow-none h-16 flex items-center px-6 justify-between border-b-0">
+<div class="text-xl font-bold text-slate-800 dark:text-slate-100 px-8">narrAItor</div>
+<nav class="hidden md:flex items-center space-x-12">
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors ease-in-out duration-300" href="#">Projects</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors ease-in-out duration-300" href="#">Booth</a>
+<a class="text-slate-900 dark:text-white font-semibold border-b-2 border-slate-900 dark:border-white pb-1 ease-in-out duration-300" href="#">Casting</a>
+</nav>
+<div class="flex items-center space-x-4">
+<button class="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<button class="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+<span class="material-symbols-outlined">check_box_outline_blank</span>
+</button>
+<button class="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</header>
+<main class="pt-24 pb-48 max-w-7xl mx-auto px-8">
+<!-- Hero: Voice Creation Suite -->
+<section class="mb-20">
+<div class="flex flex-col space-y-2 mb-12">
+<h1 class="text-display-lg font-extrabold tracking-tight text-on-surface leading-none">Voice Creation</h1>
+<p class="text-on-surface-variant font-body text-lg max-w-[65ch]">Sculpt your narrative with AI-generated textures. Design from thin air or replicate the familiar.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Suite Controls -->
+<div class="lg:col-span-7 bg-surface-container-low p-8 rounded-xl">
+<div class="flex space-x-8 mb-10 border-b border-outline-variant/15">
+<button class="pb-4 text-primary font-semibold border-b-2 border-primary tracking-wide text-sm uppercase">Design via Prompt</button>
+<button class="pb-4 text-on-surface-variant hover:text-primary transition-colors tracking-wide text-sm uppercase">Clone via Audio</button>
+</div>
+<!-- Prompt Interface -->
+<div class="space-y-6">
+<div class="relative">
+<label class="font-label text-[11px] uppercase tracking-widest text-on-surface-variant mb-2 block">Voice Description</label>
+<textarea class="w-full bg-transparent border-b-2 border-surface-variant focus:border-primary outline-none py-4 text-lg font-body placeholder:text-outline-variant/50 transition-all resize-none min-h-[140px]" placeholder="Describe the timbre, age, and cadence... e.g., 'A weathered, elderly voice with a slight Nordic accent, calm and authoritative'"></textarea>
+</div>
+<div class="flex justify-between items-center pt-4">
+<div class="flex space-x-2">
+<span class="px-3 py-1 rounded-full bg-tertiary-container text-on-tertiary-container text-[10px] font-label uppercase tracking-widest">Nordic</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-highest text-on-surface-variant text-[10px] font-label uppercase tracking-widest">Aged</span>
+</div>
+<button class="bg-primary text-on-primary px-8 py-3 rounded-xl font-medium flex items-center space-x-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+<span>Generate Voice</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Preview Area (Dynamic Selection) -->
+<div class="lg:col-span-5">
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-surface-container">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-headline font-bold text-lg tracking-tight">Active Generation</h3>
+<span class="font-label text-[10px] text-on-surface-variant uppercase tracking-widest bg-surface-container-high px-2 py-1 rounded">Unsaved</span>
+</div>
+<div class="aspect-video bg-surface rounded-lg mb-6 flex items-center justify-center relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/5 to-transparent"></div>
+<button class="w-16 h-16 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-lg transform group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined scale-125">play_arrow</span>
+</button>
+<!-- Decorative sound waves -->
+<div class="absolute bottom-4 left-0 right-0 flex justify-center items-end space-x-1 h-8 opacity-20">
+<div class="w-1 h-3 bg-primary rounded-full"></div>
+<div class="w-1 h-5 bg-primary rounded-full"></div>
+<div class="w-1 h-8 bg-primary rounded-full"></div>
+<div class="w-1 h-4 bg-primary rounded-full"></div>
+<div class="w-1 h-6 bg-primary rounded-full"></div>
+</div>
+</div>
+<div class="space-y-4">
+<button class="w-full py-4 border-2 border-primary text-primary font-bold rounded-xl hover:bg-primary hover:text-on-primary transition-all flex items-center justify-center space-x-2">
+<span class="material-symbols-outlined">library_add</span>
+<span>Save to Library</span>
+</button>
+<p class="text-center text-[11px] font-label text-on-surface-variant uppercase tracking-widest">Estimated cost: 0.12 Credits</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Voice Library -->
+<section>
+<div class="flex items-end justify-between mb-10">
+<div>
+<h2 class="text-headline-md font-bold tracking-tight mb-2">Voice Library</h2>
+<p class="text-on-surface-variant font-body">Your curated collection of digital personas.</p>
+</div>
+<div class="flex space-x-4">
+<button class="px-4 py-2 bg-surface-container-high rounded-lg text-sm font-medium flex items-center space-x-2">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+<span>Filter</span>
+</button>
+<button class="px-4 py-2 bg-surface-container-high rounded-lg text-sm font-medium flex items-center space-x-2">
+<span class="material-symbols-outlined text-sm">sort</span>
+<span>Recent</span>
+</button>
+</div>
+</div>
+<!-- Bento Grid Library -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Voice Card 1 -->
+<div class="bg-surface-container-low p-6 rounded-xl hover:bg-surface-container-high transition-colors group">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center space-x-4">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Erik - Nordic Deep</h4>
+<span class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest">Source: Prompt</span>
+</div>
+</div>
+<button class="text-on-surface-variant opacity-0 group-hover:opacity-100 hover:text-error transition-all">
+<span class="material-symbols-outlined text-xl">delete</span>
+</button>
+</div>
+<div class="flex flex-col space-y-4">
+<div class="flex items-center justify-between text-xs font-label text-on-surface-variant">
+<span>Created: 12 Oct 2023</span>
+<span class="flex items-center space-x-1">
+<span class="material-symbols-outlined text-[12px]">schedule</span>
+<span>2.4k Lines</span>
+</span>
+</div>
+<div class="flex space-x-3">
+<button class="flex-1 bg-primary text-on-primary py-2 rounded-lg text-sm font-medium hover:opacity-90">Load</button>
+<button class="flex-1 bg-tertiary-container text-on-tertiary-container py-2 rounded-lg text-sm font-medium hover:opacity-90">Preview Line</button>
+</div>
+</div>
+</div>
+<!-- Voice Card 2 -->
+<div class="bg-surface-container-low p-6 rounded-xl hover:bg-surface-container-high transition-colors group">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center space-x-4">
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed-dim flex items-center justify-center text-on-tertiary-fixed">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">cloud_done</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Aria - Ethereal</h4>
+<span class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest">Source: Clone</span>
+</div>
+</div>
+<button class="text-on-surface-variant opacity-0 group-hover:opacity-100 hover:text-error transition-all">
+<span class="material-symbols-outlined text-xl">delete</span>
+</button>
+</div>
+<div class="flex flex-col space-y-4">
+<div class="flex items-center justify-between text-xs font-label text-on-surface-variant">
+<span>Created: 08 Oct 2023</span>
+<span class="flex items-center space-x-1">
+<span class="material-symbols-outlined text-[12px]">schedule</span>
+<span>128 Lines</span>
+</span>
+</div>
+<div class="flex space-x-3">
+<button class="flex-1 bg-primary text-on-primary py-2 rounded-lg text-sm font-medium hover:opacity-90">Load</button>
+<button class="flex-1 bg-tertiary-container text-on-tertiary-container py-2 rounded-lg text-sm font-medium hover:opacity-90">Preview Line</button>
+</div>
+</div>
+</div>
+<!-- Voice Card 3 -->
+<div class="bg-surface-container-low p-6 rounded-xl hover:bg-surface-container-high transition-colors group">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center space-x-4">
+<div class="w-12 h-12 rounded-full bg-primary-fixed-dim flex items-center justify-center text-on-primary-fixed">
+<span class="material-symbols-outlined">mic_external_on</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Bjorn - Gravelly</h4>
+<span class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest">Source: Prompt</span>
+</div>
+</div>
+<button class="text-on-surface-variant opacity-0 group-hover:opacity-100 hover:text-error transition-all">
+<span class="material-symbols-outlined text-xl">delete</span>
+</button>
+</div>
+<div class="flex flex-col space-y-4">
+<div class="flex items-center justify-between text-xs font-label text-on-surface-variant">
+<span>Created: 02 Oct 2023</span>
+<span class="flex items-center space-x-1">
+<span class="material-symbols-outlined text-[12px]">schedule</span>
+<span>0 Lines</span>
+</span>
+</div>
+<div class="flex space-x-3">
+<button class="flex-1 bg-primary text-on-primary py-2 rounded-lg text-sm font-medium hover:opacity-90">Load</button>
+<button class="flex-1 bg-tertiary-container text-on-tertiary-container py-2 rounded-lg text-sm font-medium hover:opacity-90">Preview Line</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Live Preview Bar -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 w-full max-w-5xl px-6 z-40">
+<div class="bg-surface-container-lowest/90 backdrop-blur-md rounded-2xl p-4 shadow-[0_40px_100px_-20px_rgba(47,51,50,0.1)] border border-surface-container flex items-center space-x-6">
+<div class="flex items-center space-x-4 flex-1">
+<div class="flex items-center space-x-2 bg-surface p-1 rounded-lg">
+<button class="w-10 h-10 flex items-center justify-center text-primary hover:bg-primary-container rounded-md transition-colors">
+<span class="material-symbols-outlined">play_arrow</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:bg-surface-container rounded-md transition-colors">
+<span class="material-symbols-outlined">replay_10</span>
+</button>
+</div>
+<div class="relative flex-1">
+<input class="w-full bg-transparent border-none outline-none text-sm font-body focus:ring-0 placeholder:text-outline-variant" placeholder="Type text to try the voice..." type="text"/>
+<div class="absolute inset-y-0 right-0 flex items-center pointer-events-none opacity-40">
+<!-- Simulated Waveform -->
+<div class="flex items-end space-x-1 pr-4">
+<div class="w-0.5 h-3 bg-primary"></div>
+<div class="w-0.5 h-5 bg-primary"></div>
+<div class="w-0.5 h-2 bg-primary"></div>
+<div class="w-0.5 h-4 bg-primary"></div>
+<div class="w-0.5 h-6 bg-primary"></div>
+<div class="w-0.5 h-3 bg-primary"></div>
+<div class="w-0.5 h-1 bg-primary"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="h-8 w-px bg-surface-container-high"></div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg text-sm font-bold flex items-center space-x-2">
+<span>Generate &amp; Play</span>
+<span class="material-symbols-outlined text-sm">bolt</span>
+</button>
+</div>
+</div>
+<!-- Footer -->
+<footer class="fixed bottom-0 w-full h-8 flex items-center bg-slate-100 dark:bg-slate-950 border-t border-slate-200/30 dark:border-slate-800/30 px-6 font-inter text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400 z-50">
+<div class="flex justify-between items-center w-full">
+<div>System Status: Healthy</div>
+<div class="flex space-x-6">
+<span class="text-slate-400 dark:text-slate-500">CPU: 12%</span>
+<span class="text-slate-400 dark:text-slate-500">NPU: 45%</span>
+<span class="text-slate-400 dark:text-slate-500">v1.0.4-stable</span>
+</div>
+</div>
+</footer>
+</body></html>

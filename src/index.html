@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>narrAItor</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+
+  <!-- SortableJS for drag-and-drop -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.3/Sortable.min.js"></script>
+
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'surface-container':         '#eceeec',
+            'on-primary-fixed-variant':  '#495f69',
+            'outline-variant':           '#afb3b0',
+            'on-surface':                '#2f3332',
+            'background':                '#f9f9f7',
+            'inverse-surface':           '#0d0f0e',
+            'on-tertiary-fixed':         '#514737',
+            'on-secondary':              '#f6f9ff',
+            'primary-fixed-dim':         '#c1d8e4',
+            'surface-variant':           '#e0e3e0',
+            'on-primary-fixed':          '#2d424c',
+            'tertiary-fixed-dim':        '#f0e0cb',
+            'primary-fixed':             '#cfe6f2',
+            'error-dim':                 '#67040d',
+            'surface-container-low':     '#f3f4f2',
+            'tertiary':                  '#695e4c',
+            'error':                     '#a83836',
+            'secondary-fixed':           '#d2e5f7',
+            'surface':                   '#f9f9f7',
+            'on-error-container':        '#6e0a12',
+            'surface-bright':            '#f9f9f7',
+            'tertiary-container':        '#ffeed8',
+            'on-secondary-fixed-variant':'#4c5d6d',
+            'on-primary-container':      '#40555f',
+            'on-tertiary':               '#fff8f1',
+            'primary-dim':               '#415660',
+            'secondary-dim':             '#445564',
+            'on-tertiary-container':     '#635948',
+            'tertiary-fixed':            '#ffeed8',
+            'on-tertiary-fixed-variant': '#6e6351',
+            'secondary-container':       '#d2e5f7',
+            'on-surface-variant':        '#5c605e',
+            'surface-container-lowest':  '#ffffff',
+            'on-error':                  '#fff7f6',
+            'primary-container':         '#cfe6f2',
+            'on-secondary-container':    '#425463',
+            'secondary-fixed-dim':       '#c4d7e9',
+            'surface-dim':               '#d7dbd8',
+            'surface-tint':              '#4d626c',
+            'on-secondary-fixed':        '#304150',
+            'on-primary':                '#f2faff',
+            'secondary':                 '#4f6171',
+            'inverse-primary':           '#d8effb',
+            'outline':                   '#777c79',
+            'error-container':           '#fa746f',
+            'surface-container-highest': '#e0e3e0',
+            'surface-container-high':    '#e6e9e6',
+            'tertiary-dim':              '#5c5241',
+            'on-background':             '#2f3332',
+            'primary':                   '#4d626c',
+            'inverse-on-surface':        '#9c9d9b',
+          },
+          borderRadius: {
+            DEFAULT: '0.25rem',
+            lg:      '0.5rem',
+            xl:      '0.75rem',
+            '2xl':   '1rem',
+            '3xl':   '1.5rem',
+            full:    '9999px',
+          },
+          fontFamily: {
+            headline: ['Manrope', 'sans-serif'],
+            body:     ['Manrope', 'sans-serif'],
+            label:    ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body class="bg-background text-on-surface font-body antialiased overflow-hidden h-screen flex flex-col">
+
+  <!-- Top Navigation -->
+  <nav id="top-nav" class="nav-glass flex items-center px-8 h-14 flex-shrink-0 z-50">
+    <a class="font-headline font-bold text-lg tracking-tight text-primary cursor-pointer select-none" onclick="App.navigate('books')">
+      narrAItor
+    </a>
+    <div class="flex-1"></div>
+    <div class="flex items-center gap-1">
+      <button class="nav-link" data-page="books" onclick="App.navigate('books')">Library</button>
+      <button class="nav-link" data-page="casting" onclick="App.navigate('casting')">Casting</button>
+      <button class="nav-link" data-page="settings" onclick="App.navigate('settings')">Settings</button>
+      <div class="w-px h-5 bg-outline-variant/40 mx-2"></div>
+      <div id="server-status-dot" class="server-dot dot-connecting" title="Connecting to AI engine..."></div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <main id="page-content" class="flex-1 overflow-hidden"></main>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="fixed bottom-6 right-6 flex flex-col gap-2 z-[100] pointer-events-none"></div>
+
+  <!-- Modal Overlay -->
+  <div id="modal-overlay" class="hidden fixed inset-0 bg-on-surface/20 backdrop-blur-sm z-[90] flex items-center justify-center p-6">
+    <div id="modal-box" class="bg-surface-container-lowest rounded-2xl shadow-2xl w-full max-w-lg pointer-events-auto"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="api.js"></script>
+  <script src="components.js"></script>
+  <script src="pages/settings.js"></script>
+  <script src="pages/casting.js"></script>
+  <script src="pages/books.js"></script>
+  <script src="pages/booth.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

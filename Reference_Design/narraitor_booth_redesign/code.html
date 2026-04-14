@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Booth - Nordic Narrative Audio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container": "#eceeec",
+                      "on-primary-fixed-variant": "#495f69",
+                      "outline-variant": "#afb3b0",
+                      "on-surface": "#2f3332",
+                      "background": "#f9f9f7",
+                      "inverse-surface": "#0d0f0e",
+                      "on-tertiary-fixed": "#514737",
+                      "on-secondary": "#f6f9ff",
+                      "primary-fixed-dim": "#c1d8e4",
+                      "surface-variant": "#e0e3e0",
+                      "on-primary-fixed": "#2d424c",
+                      "tertiary-fixed-dim": "#f0e0cb",
+                      "primary-fixed": "#cfe6f2",
+                      "error-dim": "#67040d",
+                      "surface-container-low": "#f3f4f2",
+                      "tertiary": "#695e4c",
+                      "error": "#a83836",
+                      "secondary-fixed": "#d2e5f7",
+                      "surface": "#f9f9f7",
+                      "on-error-container": "#6e0a12",
+                      "surface-bright": "#f9f9f7",
+                      "tertiary-container": "#ffeed8",
+                      "on-secondary-fixed-variant": "#4c5d6d",
+                      "on-primary-container": "#40555f",
+                      "on-tertiary": "#fff8f1",
+                      "primary-dim": "#415660",
+                      "secondary-dim": "#445564",
+                      "on-tertiary-container": "#635948",
+                      "tertiary-fixed": "#ffeed8",
+                      "on-tertiary-fixed-variant": "#6e6351",
+                      "secondary-container": "#d2e5f7",
+                      "on-surface-variant": "#5c605e",
+                      "surface-container-lowest": "#ffffff",
+                      "on-error": "#fff7f6",
+                      "primary-container": "#cfe6f2",
+                      "on-secondary-container": "#425463",
+                      "secondary-fixed-dim": "#c4d7e9",
+                      "surface-dim": "#d7dbd8",
+                      "surface-tint": "#4d626c",
+                      "on-secondary-fixed": "#304150",
+                      "on-primary": "#f2faff",
+                      "secondary": "#4f6171",
+                      "inverse-primary": "#d8effb",
+                      "outline": "#777c79",
+                      "error-container": "#fa746f",
+                      "surface-container-highest": "#e0e3e0",
+                      "surface-container-high": "#e6e9e6",
+                      "tertiary-dim": "#5c5241",
+                      "on-background": "#2f3332",
+                      "primary": "#4d626c",
+                      "inverse-on-surface": "#9c9d9b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Manrope"],
+                      "body": ["Manrope"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .nordic-blur { backdrop-filter: blur(20px); }
+        .glass-panel { background: rgba(255, 255, 255, 0.4); border: 1px solid rgba(175, 179, 176, 0.15); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col">
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-0 w-full z-50 bg-[#f9f9f7]/80 dark:bg-[#1a1c1c]/80 backdrop-blur-md">
+<div class="flex justify-between items-center px-12 h-16 w-full max-w-full">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tighter text-[#2f3332] dark:text-[#f9f9f7]">Nordic Narrative Audio</span>
+<!-- Desktop Window Controls (Requested) -->
+<div class="flex gap-2 ml-4">
+<div class="w-3 h-3 rounded-full bg-outline-variant/30"></div>
+<div class="w-3 h-3 rounded-full bg-outline-variant/30"></div>
+<div class="w-3 h-3 rounded-full bg-outline-variant/30"></div>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-10">
+<a class="font-manrope uppercase tracking-widest text-sm text-[#455A64]/60 dark:text-[#afb3b0]/60 hover:text-[#2f3332] dark:hover:text-[#ffffff] transition-colors duration-300" href="#">Projects</a>
+<a class="font-manrope uppercase tracking-widest text-sm text-[#455A64] dark:text-[#f9f9f7] border-b-2 border-[#695e4c] pb-1 hover:text-[#2f3332] dark:hover:text-[#ffffff] transition-colors duration-300" href="#">Booth</a>
+<a class="font-manrope uppercase tracking-widest text-sm text-[#455A64]/60 dark:text-[#afb3b0]/60 hover:text-[#2f3332] dark:hover:text-[#ffffff] transition-colors duration-300" href="#">Casting</a>
+</nav>
+<div class="flex items-center gap-6">
+<!-- Performance Meters -->
+<div class="flex items-center gap-4 px-4 py-1.5 bg-surface-container-low rounded-full">
+<div class="flex flex-col items-end">
+<span class="font-label text-[10px] text-outline uppercase tracking-tighter">Engine Engine Power</span>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-xs text-primary" data-icon="memory">memory</span>
+<span class="font-label text-[10px] font-bold">12%</span>
+</div>
+</div>
+<div class="h-6 w-[1px] bg-outline-variant/20"></div>
+<div class="flex flex-col items-end">
+<span class="font-label text-[10px] text-outline uppercase tracking-tighter">NPU Load</span>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-xs text-tertiary" data-icon="speed">speed</span>
+<span class="font-label text-[10px] font-bold">84%</span>
+</div>
+</div>
+</div>
+<button class="material-symbols-outlined text-[#455A64] dark:text-[#afb3b0] hover:text-[#2f3332] transition-colors" data-icon="settings">settings</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Portrait of a professional audio producer with neutral expression in a minimalist studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAj2iYznXd9Jr0R8lGBxJ9QYiivEdUSoKpcJOxPbZzKRNmgC9yf79GARO74qKePa0yxaS9u4mWfBrIJHxm-jyCEDCtWwsx_G4XnzbENTKc22EWf6OakzhLMsvnNf9EDYTaiwqlM8DgLoDYZruIT4Aj_huGZhNin7CEES8si8nrXi8Sx-Fz1qyIFgFu-yrLO1_TvzTWqRxVa3gKB_aqbg_iYqH-iBgLXtyc98S3H2Lg7pval7HP6PRxNDVbLtU44zROgyWTPo0AkgcA"/>
+</div>
+</div>
+</div>
+<div class="bg-[#f3f4f2] dark:bg-[#2f3332] h-[1px] w-full"></div>
+</header>
+<main class="flex-grow pt-24 pb-12 px-12 max-w-[1600px] mx-auto w-full">
+<!-- Project Title Header -->
+<div class="mb-12">
+<span class="font-label text-xs uppercase tracking-[0.3em] text-outline mb-2 block">Active Session</span>
+<h1 class="text-5xl font-extrabold tracking-tight text-on-surface font-headline">The Glass Horizon</h1>
+</div>
+<!-- Main Bento Layout -->
+<div class="grid grid-cols-12 gap-8 items-start">
+<!-- Left Column: Parameters & Import -->
+<div class="col-span-12 lg:col-span-4 space-y-8">
+<!-- Synthesis Parameters -->
+<section class="bg-surface-container-lowest p-8 rounded-xl border border-transparent shadow-sm">
+<h2 class="font-headline text-lg font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="tune">tune</span>
+                        Synthesis Parameters
+                    </h2>
+<div class="space-y-6">
+<div>
+<label class="font-label text-[10px] uppercase tracking-widest text-outline block mb-3">Local Voice Profile</label>
+<div class="relative group">
+<select class="w-full bg-transparent border-b-2 border-surface-variant focus:border-primary outline-none py-2 font-medium appearance-none cursor-pointer">
+<option>Erik - Nordic Deep</option>
+<option>Astrid - Ethereal North</option>
+<option>Lukas - Warm Narrator</option>
+<option>Sanna - Crisp Studio</option>
+</select>
+<span class="material-symbols-outlined absolute right-0 top-2 pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div>
+<label class="font-label text-[10px] uppercase tracking-widest text-outline block mb-3">Playback Speed</label>
+<div class="flex items-center gap-4">
+<input class="flex-grow accent-primary h-1" max="2" min="0.5" step="0.1" type="range" value="1.0"/>
+<span class="font-label text-xs font-bold w-8 text-right">1.0x</span>
+</div>
+</div>
+<div>
+<label class="font-label text-[10px] uppercase tracking-widest text-outline block mb-3">Pitch Shift</label>
+<div class="flex items-center gap-4">
+<input class="flex-grow accent-tertiary h-1" max="5" min="-5" step="1" type="range" value="0"/>
+<span class="font-label text-xs font-bold w-8 text-right">0st</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Import Area -->
+<section class="border-2 border-dashed border-outline-variant/30 rounded-xl p-12 text-center group hover:border-primary/50 transition-all duration-500 bg-surface/50">
+<div class="mb-4">
+<span class="material-symbols-outlined text-4xl text-outline-variant group-hover:text-primary transition-colors duration-500" data-icon="upload_file">upload_file</span>
+</div>
+<p class="font-headline font-semibold text-on-surface mb-2">Drop chapter files here</p>
+<p class="text-xs text-outline mb-6">PDF, DOCX, or TXT supported</p>
+<button class="px-8 py-3 bg-primary text-on-primary rounded-full font-label text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity">Select Files</button>
+</section>
+<!-- Synthesis Queue -->
+<section class="bg-surface-container-low p-6 rounded-xl">
+<h3 class="font-label text-[10px] uppercase tracking-widest text-outline mb-4">Synthesis Queue (Local Engine)</h3>
+<div class="space-y-4">
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-xs">
+<span class="font-medium">Chapter 04: The Mirror Room</span>
+<span class="text-tertiary font-bold">65%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-[65%]"></div>
+</div>
+</div>
+<div class="flex flex-col gap-2 opacity-50">
+<div class="flex justify-between text-xs">
+<span class="font-medium">Chapter 05: Silent Echoes</span>
+<span class="font-label italic">Waiting...</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full"></div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Chapter List & Metadata -->
+<div class="col-span-12 lg:col-span-8 space-y-8">
+<!-- Audio Preview Player (Top Priority) -->
+<section class="bg-on-surface text-surface rounded-xl p-8 shadow-2xl relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-8">
+<div>
+<span class="font-label text-[10px] uppercase tracking-widest text-outline-variant mb-1 block">Currently Previewing</span>
+<h3 class="text-2xl font-bold font-headline">Arrival at the Glass House</h3>
+</div>
+<button class="material-symbols-outlined text-surface/60 hover:text-surface" data-icon="more_vert">more_vert</button>
+</div>
+<!-- Waveform Visualization -->
+<div class="flex items-end gap-1 h-20 mb-8 px-4">
+<!-- Simulated bars -->
+<div class="bg-surface/20 w-1 h-[20%] rounded-full"></div>
+<div class="bg-surface/20 w-1 h-[40%] rounded-full"></div>
+<div class="bg-surface/20 w-1 h-[60%] rounded-full"></div>
+<div class="bg-surface w-1 h-[80%] rounded-full"></div>
+<div class="bg-surface w-1 h-[50%] rounded-full"></div>
+<div class="bg-surface w-1 h-[90%] rounded-full"></div>
+<div class="bg-surface w-1 h-[100%] rounded-full"></div>
+<div class="bg-tertiary-container w-1 h-[70%] rounded-full"></div>
+<div class="bg-tertiary-container w-1 h-[85%] rounded-full"></div>
+<div class="bg-tertiary-container w-1 h-[40%] rounded-full"></div>
+<div class="bg-surface/20 w-1 h-[30%] rounded-full"></div>
+<div class="bg-surface/20 w-1 h-[50%] rounded-full"></div>
+<div class="bg-surface/20 w-1 h-[20%] rounded-full"></div>
+<div class="bg-surface/20 w-1 h-[40%] rounded-full"></div>
+<div class="bg-surface/20 w-1 h-[60%] rounded-full"></div>
+<div class="bg-surface/20 w-1 h-[40%] rounded-full"></div>
+<div class="bg-surface/20 w-1 h-[20%] rounded-full"></div>
+<div class="bg-surface/20 w-1 h-[40%] rounded-full"></div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-surface hover:text-tertiary-container" data-icon="replay_10">replay_10</button>
+<button class="w-14 h-14 bg-tertiary text-on-tertiary rounded-full flex items-center justify-center hover:scale-105 transition-transform" style="font-variation-settings: 'FILL' 1;">
+<span class="material-symbols-outlined text-3xl" data-icon="play_arrow" data-weight="fill">play_arrow</span>
+</button>
+<button class="material-symbols-outlined text-surface hover:text-tertiary-container" data-icon="forward_10">forward_10</button>
+</div>
+<div class="text-right">
+<span class="font-label text-sm font-bold tracking-tighter">02:14 / 12:45</span>
+</div>
+</div>
+</div>
+<!-- Background aesthetic gradient -->
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent opacity-30"></div>
+</section>
+<!-- Chapter List & Metadata -->
+<section class="space-y-4">
+<div class="flex justify-between items-end mb-6">
+<h2 class="font-headline text-2xl font-bold">Manuscript Chapters</h2>
+<span class="text-xs text-outline font-label">12 Chapters Imported</span>
+</div>
+<div class="space-y-3">
+<!-- Chapter Item 1 -->
+<div class="group bg-surface-container-lowest p-6 rounded-xl flex items-center gap-8 transition-all hover:bg-white">
+<div class="w-12 h-12 bg-surface-container rounded-lg flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</div>
+<div class="flex-grow grid grid-cols-3 gap-6">
+<div class="col-span-2">
+<label class="font-label text-[10px] uppercase text-outline block mb-1">Metadata: Chapter Title</label>
+<input class="w-full bg-transparent border-none p-0 focus:ring-0 font-headline font-bold text-lg text-on-surface" type="text" value="Arrival at the Glass House"/>
+</div>
+<div>
+<label class="font-label text-[10px] uppercase text-outline block mb-1">Duration</label>
+<span class="font-label text-sm font-semibold">12:45 (Processed)</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors text-primary">
+<span class="material-symbols-outlined" data-icon="audio_file">audio_file</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors text-outline">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<!-- Chapter Item 2 -->
+<div class="group bg-surface-container-lowest p-6 rounded-xl flex items-center gap-8 transition-all hover:bg-white">
+<div class="w-12 h-12 bg-surface-container rounded-lg flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</div>
+<div class="flex-grow grid grid-cols-3 gap-6">
+<div class="col-span-2">
+<label class="font-label text-[10px] uppercase text-outline block mb-1">Metadata: Chapter Title</label>
+<input class="w-full bg-transparent border-none p-0 focus:ring-0 font-headline font-bold text-lg text-on-surface" type="text" value="The North-West Corridor"/>
+</div>
+<div>
+<label class="font-label text-[10px] uppercase text-outline block mb-1">Duration</label>
+<span class="font-label text-sm font-semibold italic text-tertiary">Queued...</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors text-outline cursor-not-allowed">
+<span class="material-symbols-outlined" data-icon="audio_file">audio_file</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors text-outline">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<!-- Chapter Item 3 -->
+<div class="group bg-surface-container-lowest p-6 rounded-xl flex items-center gap-8 transition-all hover:bg-white">
+<div class="w-12 h-12 bg-surface-container rounded-lg flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</div>
+<div class="flex-grow grid grid-cols-3 gap-6">
+<div class="col-span-2">
+<label class="font-label text-[10px] uppercase text-outline block mb-1">Metadata: Chapter Title</label>
+<input class="w-full bg-transparent border-none p-0 focus:ring-0 font-headline font-bold text-lg text-on-surface" type="text" value="Midnight Reflections"/>
+</div>
+<div>
+<label class="font-label text-[10px] uppercase text-outline block mb-1">Duration</label>
+<span class="font-label text-sm font-semibold">14:22 (Processed)</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors text-primary">
+<span class="material-symbols-outlined" data-icon="audio_file">audio_file</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors text-outline">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="fixed bottom-0 w-full h-8 flex items-center bg-[#f3f4f2] dark:bg-[#1a1c1c] z-50">
+<div class="flex justify-between px-12 w-full items-center">
+<span class="font-inter text-[10px] tracking-tight uppercase text-[#695e4c] dark:text-[#f0e0cb]">Engine Active: Local Neural Processing</span>
+<div class="flex gap-8">
+<span class="font-inter text-[10px] tracking-tight uppercase text-[#455A64]/50 hover:bg-[#eceeec] dark:hover:bg-[#2f3332] transition-all duration-500 cursor-pointer">CPU: 12%</span>
+<span class="font-inter text-[10px] tracking-tight uppercase font-bold text-[#695e4c] hover:bg-[#eceeec] dark:hover:bg-[#2f3332] transition-all duration-500 cursor-pointer">NPU: 84%</span>
+<span class="font-inter text-[10px] tracking-tight uppercase text-[#455A64]/50 hover:bg-[#eceeec] dark:hover:bg-[#2f3332] transition-all duration-500 cursor-pointer">Latency: 2ms</span>
+</div>
+</div>
+</footer>
+</body></html>

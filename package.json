@@ -1,0 +1,17 @@
+{
+  "name": "narraitor",
+  "version": "1.0.0",
+  "description": "AI-powered local audiobook generation using Qwen3-TTS",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "cross-env NODE_ENV=development electron ."
+  },
+  "keywords": ["audiobook", "tts", "electron", "ai"],
+  "author": "narrAItor",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "electron": "^33.4.0"
+  }
+}

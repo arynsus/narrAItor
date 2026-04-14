@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600;800&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#4d626c",
+                    "error-container": "#fa746f",
+                    "tertiary-fixed-dim": "#f0e0cb",
+                    "secondary-dim": "#445564",
+                    "secondary-fixed": "#d2e5f7",
+                    "primary-fixed-dim": "#c1d8e4",
+                    "error": "#a83836",
+                    "on-secondary": "#f6f9ff",
+                    "inverse-surface": "#0d0f0e",
+                    "surface-container": "#eceeec",
+                    "on-surface": "#2f3332",
+                    "on-error": "#fff7f6",
+                    "surface-container-high": "#e6e9e6",
+                    "surface-container-highest": "#e0e3e0",
+                    "inverse-primary": "#d8effb",
+                    "on-secondary-container": "#425463",
+                    "on-tertiary": "#fff8f1",
+                    "surface": "#f9f9f7",
+                    "outline": "#777c79",
+                    "on-surface-variant": "#5c605e",
+                    "background": "#f9f9f7",
+                    "inverse-on-surface": "#9c9d9b",
+                    "tertiary-fixed": "#ffeed8",
+                    "on-tertiary-fixed": "#514737",
+                    "primary-fixed": "#cfe6f2",
+                    "secondary-fixed-dim": "#c4d7e9",
+                    "tertiary": "#695e4c",
+                    "error-dim": "#67040d",
+                    "on-background": "#2f3332",
+                    "on-tertiary-container": "#635948",
+                    "tertiary-dim": "#5c5241",
+                    "on-primary-container": "#40555f",
+                    "surface-tint": "#4d626c",
+                    "primary-dim": "#415660",
+                    "secondary": "#4f6171",
+                    "surface-variant": "#e0e3e0",
+                    "surface-container-low": "#f3f4f2",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#2d424c",
+                    "outline-variant": "#afb3b0",
+                    "on-primary-fixed-variant": "#495f69",
+                    "on-tertiary-fixed-variant": "#6e6351",
+                    "tertiary-container": "#ffeed8",
+                    "on-secondary-fixed-variant": "#4c5d6d",
+                    "surface-dim": "#d7dbd8",
+                    "on-error-container": "#6e0a12",
+                    "surface-bright": "#f9f9f7",
+                    "on-secondary-fixed": "#304150",
+                    "primary-container": "#cfe6f2",
+                    "on-primary": "#f2faff",
+                    "secondary-container": "#d2e5f7"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Manrope"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .drift-in {
+            animation: driftIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        @keyframes driftIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .no-line { border: none !important; }
+        .tonal-shift { transition: background-color 0.3s ease; }
+        .window-control:hover { filter: brightness(0.9); }
+        .window-close:hover { background-color: #e81123 !important; color: white !important; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<!-- Title Bar / Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-slate-50/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-surface-variant flex flex-col">
+<!-- Desktop Window Controls Strip -->
+<div class="flex justify-between items-center px-4 py-1.5 bg-surface-container-low/50 text-[10px] font-label tracking-widest uppercase text-on-surface-variant/60">
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Local Engine Ready (QWEN3-TTS)</span>
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[12px]" data-icon="folder">folder</span> ~/Documents/narrAItor/Projects</span>
+</div>
+<div class="flex items-center">
+<button class="window-control px-3 py-1 hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined text-sm" data-icon="minimize">minimize</span></button>
+<button class="window-control px-3 py-1 hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined text-sm" data-icon="check_box_outline_blank">check_box_outline_blank</span></button>
+<button class="window-close px-3 py-1 transition-colors"><span class="material-symbols-outlined text-sm" data-icon="close">close</span></button>
+</div>
+</div>
+<!-- App Navigation -->
+<div class="flex justify-between items-center px-12 py-3 w-full max-w-[1440px] mx-auto">
+<!-- Brand Logo -->
+<div class="text-xl font-bold tracking-tighter text-slate-800 dark:text-slate-100 font-headline flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="auto_stories">auto_stories</span>
+            narrAItor
+        </div>
+<!-- Navigation Links -->
+<div class="hidden md:flex items-center gap-10 font-manrope text-sm font-medium tracking-tight">
+<a class="text-slate-900 dark:text-white font-bold border-b-2 border-primary pb-1" href="#">Projects</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors duration-300" href="#">Booth</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors duration-300" href="#">Casting</a>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-6 text-slate-700 dark:text-slate-300">
+<div class="hidden lg:flex items-center gap-4 px-3 py-1.5 bg-surface-container rounded-lg">
+<div class="flex flex-col items-end">
+<span class="text-[9px] uppercase font-bold text-on-surface-variant/70 leading-none">CPU Usage</span>
+<span class="text-xs font-mono font-bold text-primary">12.4%</span>
+</div>
+<div class="w-12 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[12%]"></div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-surface-variant rounded-lg transition-all">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button class="p-2 hover:bg-surface-variant rounded-lg transition-all">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-36 pb-20 px-6 md:px-12 max-w-[1440px] mx-auto min-h-screen">
+<!-- Header Section -->
+<header class="mb-12 drift-in">
+<h1 class="text-4xl font-extrabold tracking-tighter mb-4 text-on-surface font-headline">Projects</h1>
+<p class="text-on-surface-variant max-w-[65ch] text-base leading-relaxed">
+            Local library of high-fidelity audiobook productions. Manage offline drafts, monitor local NPU synthesis, and export masters.
+        </p>
+</header>
+<!-- Projects Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+<!-- New Project Action Card -->
+<div class="group relative aspect-[3/4] rounded-xl bg-surface-container-low border-2 border-dashed border-outline-variant/30 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 hover:border-primary/50 hover:bg-surface-container drift-in" style="animation-delay: 0.1s;">
+<div class="w-14 h-14 rounded-full bg-white flex items-center justify-center mb-4 transition-transform duration-500 group-hover:scale-105 shadow-sm border border-surface-variant">
+<span class="material-symbols-outlined text-primary" data-icon="add">add</span>
+</div>
+<span class="font-headline font-bold text-base text-on-surface">New Project</span>
+<span class="text-[10px] font-label uppercase tracking-widest mt-1 text-on-surface-variant/60">Create File</span>
+</div>
+<!-- Project Card 1: Processing -->
+<div class="group relative flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-variant/50 transition-all duration-300 hover:shadow-xl drift-in" style="animation-delay: 0.2s;">
+<div class="relative aspect-[3/4] overflow-hidden">
+<img alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="minimalist abstract book cover with soft neutral tones and architectural shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyG6AH8TPPCFfTXnO7UQBcZM0n4uJ2s43YItPEgCwoXYoHWqgSOoYC2KdJzVv_kdeAmGUm9roilLvQ5YVJILnh-TFl1zlQo5ZmHlY8WZ_cYjQS1IlU59NTcO3nLl9I54MHzEttGeumfn8oqVvMkCr-BpKeKH8-utVG3E1mujjddmqhGMPGyUz-nDQkWU75-p1tGusgxI8k12k4G1CiPysg2QV_GmKDbkiTh56GYGxE4_JspI9BOovqF04fAeeYKd64YCdVIvbm388"/>
+<div class="absolute top-4 left-4">
+<span class="px-2.5 py-1 bg-primary text-on-primary text-[9px] font-label font-bold uppercase tracking-widest rounded-md flex items-center gap-1.5 shadow-md">
+<span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
+                        Synthesizing
+                    </span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline font-bold text-lg text-on-surface truncate">Echoes of the North</h3>
+</div>
+<p class="text-on-surface-variant font-label text-xs mb-4">Elias Thorne</p>
+<div class="w-full bg-surface-container h-1 rounded-full overflow-hidden mb-2">
+<div class="bg-primary h-full w-[65%] rounded-full"></div>
+</div>
+<div class="flex justify-between items-end">
+<div class="flex flex-col">
+<span class="text-[9px] font-label text-on-surface-variant uppercase font-bold tracking-tight">Status: AI Synthesis (65%)</span>
+<span class="text-[9px] font-label text-on-surface-variant/60">Updated: Today, 10:24 AM • 1.2 GB</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Project Card 2: Complete -->
+<div class="group relative flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-variant/50 transition-all duration-300 hover:shadow-xl drift-in" style="animation-delay: 0.3s;">
+<div class="relative aspect-[3/4] overflow-hidden">
+<img alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="close-up of textured heavy watercolor paper with subtle sage green ink strokes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACZPvY5uTpC8lxb8if3z5WO9RaRQXTodhHwpzw0GE3GgkG4TxI5DB_qoBuvFBX_FChJohN5O3NdCMF_iIEdKPm5SaKbpPf4_v5uSruG0xOM578KDRZsNOEvWVgpumLhK1cz_q-QsgD8RgtsxdLyDn4BF_HTZOjdUwjbQmNW3bjb1ReBGZbTTAAFFivTzKSldJtqOwl-aTDqhzMGs_SQ-zD22rmkdpRWlORgJsd2p5556kOavtTk-jqijGOmvhFy5AsY1H06PmR4MQ"/>
+<div class="absolute top-4 left-4">
+<span class="px-2.5 py-1 bg-surface-container-highest text-on-surface-variant text-[9px] font-label font-bold uppercase tracking-widest rounded-md shadow-sm border border-surface-variant">
+                        Stored Locally
+                    </span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="font-headline font-bold text-lg text-on-surface mb-1">The Glass Horizon</h3>
+<p class="text-on-surface-variant font-label text-xs mb-4">Astrid Lindgren</p>
+<div class="flex items-center justify-between border-t border-surface-variant pt-4">
+<div class="flex flex-col">
+<span class="text-[9px] font-label text-on-surface-variant font-bold uppercase">12h 45m • 4.5 GB</span>
+<span class="text-[9px] font-label text-on-surface-variant/60">Created: Nov 12, 2023</span>
+</div>
+<button class="p-2 hover:bg-surface-container rounded-lg text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="play_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Project Card 3: Draft -->
+<div class="group relative flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-variant/50 transition-all duration-300 hover:shadow-xl drift-in" style="animation-delay: 0.4s;">
+<div class="relative aspect-[3/4] overflow-hidden">
+<img alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="vibrant mountain range at dawn with blue and violet hues" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVJT2JQXYyqwB7rLben-QMF4K2GmMqQ2i3Adw4Wt6DAXnFJE6yka_sgdNB5zloqn5MKsZNVd_9CeKdZwS4RLyv2Km6Qo8X4BxlPGgZyGtqLjsK0esiCu46snXI8ZxoCiEI6oH0I8GBD3z-xPSSAKgClgtXVP3Ilef_C-oWx2wTbIlDIndkgU4HUowlLm8r_hJoRR96M3y94yBdSyX6yUkBAQse16E-yFsvIXzw4mlciKltguefB4xTpSeB8LT1QjlDodEZBX-qEE0"/>
+<div class="absolute top-4 left-4">
+<span class="px-2.5 py-1 bg-secondary-container text-on-secondary-container text-[9px] font-label font-bold uppercase tracking-widest rounded-md shadow-sm border border-secondary-fixed">
+                        Draft File
+                    </span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="font-headline font-bold text-lg text-on-surface mb-1">Untold Silences</h3>
+<p class="text-on-surface-variant font-label text-xs mb-4">Marcello Rossi</p>
+<div class="flex items-center justify-between border-t border-surface-variant pt-4">
+<div class="flex flex-col">
+<span class="text-[9px] font-label text-on-surface-variant font-bold uppercase tracking-tight">Pending Sync • 45 MB</span>
+<span class="text-[9px] font-label text-on-surface-variant/60">Created: Dec 01, 2023</span>
+</div>
+<button class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="edit_note">edit_note</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Project Card 4: Complete -->
+<div class="group relative flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-variant/50 transition-all duration-300 hover:shadow-xl drift-in" style="animation-delay: 0.5s;">
+<div class="relative aspect-[3/4] overflow-hidden">
+<img alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="minimalist white porcelain vessel on light wood table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrBoZ-KiPC_2yR4S_Qgs6T9M9UP2ghz1Rx4iwt4s8YFAjSXYfH3UDkBjm8vst1SPnihzs544-ZFyr4GvBKGxPPMLhztnDAwjNWhnJsOLNOjjRMnBj_tT9vnkrd4o4p4e5IPmdjqhAzoNV-_gnLnoPHt5tUkzt-QQh0UQw8QXNTMi0amtUXSRKEIIdOUOCS9aVY9UIBKEwy10X8wNokieiH6u938QKPDYOUziUJA7syZTwGaJjACjKcUu1eiu-1Z8iZZhEFMJd49kM"/>
+<div class="absolute top-4 left-4">
+<span class="px-2.5 py-1 bg-surface-container-highest text-on-surface-variant text-[9px] font-label font-bold uppercase tracking-widest rounded-md shadow-sm border border-surface-variant">
+                        Stored Locally
+                    </span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="font-headline font-bold text-lg text-on-surface mb-1">The Arctic Journal</h3>
+<p class="text-on-surface-variant font-label text-xs mb-4">Frederik Nansen</p>
+<div class="flex items-center justify-between border-t border-surface-variant pt-4">
+<div class="flex flex-col">
+<span class="text-[9px] font-label text-on-surface-variant font-bold uppercase">08h 12m • 2.8 GB</span>
+<span class="text-[9px] font-label text-on-surface-variant/60">Created: Oct 29, 2023</span>
+</div>
+<button class="p-2 hover:bg-surface-container rounded-lg text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="play_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Status Bar Footer -->
+<footer class="bg-surface-container-low border-t border-surface-variant py-4">
+<div class="max-w-[1440px] mx-auto px-12 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-6">
+<div class="flex flex-col">
+<span class="text-[10px] font-bold tracking-tighter font-headline text-on-surface leading-none">narrAItor Desktop</span>
+<span class="text-[9px] font-label text-on-surface-variant/60 uppercase mt-0.5">v2.4.1 (Stable Build)</span>
+</div>
+<div class="h-6 w-px bg-surface-variant"></div>
+<div class="flex items-center gap-4 text-[10px] font-label text-on-surface-variant/80 uppercase tracking-widest">
+<span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Offline Engine Active</span>
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[12px]" data-icon="database">database</span> 8.4 GB Used</span>
+</div>
+</div>
+<div class="flex gap-6 text-[10px] font-label uppercase tracking-widest text-on-surface-variant/80">
+<a class="hover:text-primary transition-colors" href="#">Release Notes</a>
+<a class="hover:text-primary transition-colors" href="#">Local Docs</a>
+<a class="hover:text-primary transition-colors" href="#">Log Files</a>
+<a class="hover:text-primary transition-colors" href="#">Help</a>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,19 @@
+# narrAItor Python dependencies
+# Install PyTorch first: https://pytorch.org/get-started/locally/
+# Then install these packages:
+
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.9
+huggingface_hub>=0.21.0
+soundfile>=0.12.1
+numpy>=1.24.0
+mutagen>=1.47.0
+
+# qwen-tts is installed from the local reference copy:
+# pip install -e ./Reference_Qwen3-TTS
+# OR from PyPI:
+# pip install -U qwen-tts
+
+# Optional but recommended for faster inference:
+# pip install flash-attn --no-build-isolation
