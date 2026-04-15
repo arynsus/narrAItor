@@ -143,17 +143,24 @@ const App = (() => {
       console.log('[App.init] macOS detected, setting up nav padding. nav element:', nav);
 
       function updateNavPadding() {
+        // Check both HTML5 fullscreen and window.innerHeight (Electron fullscreen detection)
         const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement;
-        const newPadding = isFullscreen ? '0' : '88px';
-        console.log('[updateNavPadding] fullscreenElement:', document.fullscreenElement, 'webkitFullscreenElement:', document.webkitFullscreenElement, 'isFullscreen:', isFullscreen, 'setting padding to:', newPadding);
+        const isElectronFullscreen = window.innerHeight === screen.height && window.innerWidth === screen.width;
+        const shouldRemovePadding = isFullscreen || isElectronFullscreen;
+        const newPadding = shouldRemovePadding ? '0' : '88px';
+
+        console.log('[updateNavPadding] HTML5 fullscreen:', isFullscreen, 'Electron fullscreen:', isElectronFullscreen, 'combined:', shouldRemovePadding, 'setting padding to:', newPadding);
+
         if (nav) {
           nav.style.paddingLeft = newPadding;
-          console.log('[updateNavPadding] padding updated, current paddingLeft:', nav.style.paddingLeft);
+          console.log('[updateNavPadding] padding updated to:', nav.style.paddingLeft);
         }
       }
 
       if (nav) {
         updateNavPadding();
+
+        // Listen for HTML5 fullscreen changes
         document.addEventListener('fullscreenchange', () => {
           console.log('[fullscreenchange event] fired');
           updateNavPadding();
@@ -162,6 +169,13 @@ const App = (() => {
           console.log('[webkitfullscreenchange event] fired');
           updateNavPadding();
         });
+
+        // Listen for window resize (catches Electron fullscreen mode)
+        window.addEventListener('resize', () => {
+          console.log('[resize event] fired - window size:', window.innerWidth, 'x', window.innerHeight, 'screen size:', screen.width, 'x', screen.height);
+          updateNavPadding();
+        });
+
         console.log('[App.init] fullscreen event listeners attached');
       }
     }
