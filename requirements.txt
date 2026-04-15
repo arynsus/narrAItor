@@ -9,6 +9,7 @@ huggingface_hub>=0.21.0
 soundfile>=0.12.1
 numpy>=1.24.0
 mutagen>=1.47.0
+scipy>=1.11.0
 
 # qwen-tts is installed from the local reference copy:
 # pip install -e ./Reference_Qwen3-TTS

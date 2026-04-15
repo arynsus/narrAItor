@@ -42,7 +42,7 @@ const BooksPage = (() => {
     const cover = p.has_cover ? API.projects.coverUrl(p.id) : null;
 
     return `
-      <div class="card-hover flex flex-col overflow-hidden" onclick="BooksPage.openBooth('${p.id}', ${JSON.stringify(escHtml(p.title))})">
+      <div class="card-hover flex flex-col overflow-hidden" onclick="BooksPage.openBooth('${p.id}', '${encodeURIComponent(p.title)}')">
 
         <!-- Cover -->
         <div class="w-full aspect-[3/4] cover-placeholder relative overflow-hidden">
@@ -61,9 +61,14 @@ const BooksPage = (() => {
           <p class="text-xs text-muted mb-2">${escHtml(p.author || 'Unknown author')}</p>
           <div class="mt-auto flex items-center justify-between">
             <span class="text-xs font-label text-subtle">${p.chapter_count || 0} ${chapterWord}</span>
-            <button class="btn-icon opacity-0 group-hover:opacity-100" title="Delete" onclick="event.stopPropagation(); BooksPage.deleteBook('${p.id}')">
-              <span class="material-symbols-outlined icon-sm" style="color:#a83836">delete</span>
-            </button>
+            <div class="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+              <button class="btn-icon w-7 h-7" title="Edit metadata" onclick="event.stopPropagation(); BooksPage.editBook('${p.id}')">
+                <span class="material-symbols-outlined icon-sm">edit</span>
+              </button>
+              <button class="btn-icon w-7 h-7" title="Delete" onclick="event.stopPropagation(); BooksPage.deleteBook('${p.id}')">
+                <span class="material-symbols-outlined icon-sm" style="color:#a83836">delete</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -208,6 +213,13 @@ const BooksPage = (() => {
     App.navigate('booth', { projectId, projectTitle: decodeURIComponent(projectTitle) });
   }
 
+  // ── Edit Book ──────────────────────────────────────────────────────────────
+
+  function editBook(projectId) {
+    const project = projects.find(p => p.id === projectId);
+    if (project) openNewBookModal(project);
+  }
+
   // ── Delete Book ────────────────────────────────────────────────────────────
 
   async function deleteBook(projectId) {
@@ -253,5 +265,5 @@ const BooksPage = (() => {
 
   function unmount() {}
 
-  return { render, mount, unmount, openBooth, deleteBook };
+  return { render, mount, unmount, openBooth, editBook, deleteBook, refresh: loadProjects };
 })();

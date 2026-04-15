@@ -6,6 +6,16 @@
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(175, 179, 176, 0.15);
+  /* Make the entire nav bar draggable so the window can be moved */
+  -webkit-app-region: drag;
+}
+/* Interactive elements inside the drag region must opt out */
+.nav-glass button,
+.nav-glass a,
+.nav-glass input,
+.nav-glass select,
+#server-status-dot {
+  -webkit-app-region: no-drag;
 }
 
 /* Nav links */
@@ -446,6 +456,46 @@
   background: linear-gradient(to top, #f9f9f7, transparent);
   pointer-events: none;
 }
+
+/* ── Queue Panel ─────────────────────────────────────────────────────────── */
+
+.queue-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.375rem 0.25rem;
+  border-radius: 0.5rem;
+  transition: background 150ms ease;
+}
+.queue-item:hover { background: rgba(243,244,242,0.7); }
+
+/* Status dot colours for queue */
+.status-dot-pending    { background: #d7dbd8; }
+.status-dot-queued     { background: #afb3b0; }
+.status-dot-cancelled  { background: #afb3b0; }
+
+/* Speed slider — reuse audio-scrubber track, just a lighter thumb */
+.speed-slider {
+  -webkit-appearance: none;
+  height: 3px;
+  border-radius: 99px;
+  background: linear-gradient(to right, #4d626c var(--pct, 50%), #e0e3e0 var(--pct, 50%));
+  outline: none;
+  cursor: pointer;
+  flex: 1;
+}
+.speed-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #4d626c;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transition: transform 150ms ease;
+}
+.speed-slider::-webkit-slider-thumb:hover { transform: scale(1.25); }
 
 /* Upload zone */
 .upload-zone {

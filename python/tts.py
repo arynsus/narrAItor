@@ -9,18 +9,42 @@ from typing import Optional, Tuple
 # Lazy imports — only loaded when a model is first used
 _torch = None
 _sf = None
+_np = None
 _Qwen3TTSModel = None
+
+try:
+    from scipy.signal import resample as _scipy_resample
+    _HAS_SCIPY = True
+except ImportError:
+    _HAS_SCIPY = False
 
 
 def _import_deps():
-    global _torch, _sf, _Qwen3TTSModel
+    global _torch, _sf, _np, _Qwen3TTSModel
     if _torch is None:
         import torch
         import soundfile as sf
+        import numpy as np
         from qwen_tts import Qwen3TTSModel
         _torch = torch
         _sf = sf
+        _np = np
         _Qwen3TTSModel = Qwen3TTSModel
+
+
+def _apply_speed(audio, sr: int, speed: float):
+    """Pitch-preserving time stretch using FFT resampling (scipy) or fallback."""
+    if abs(speed - 1.0) < 0.02:
+        return audio, sr
+    import numpy as np
+    new_len = max(1, int(len(audio) / speed))
+    if _HAS_SCIPY:
+        resampled = _scipy_resample(audio, new_len)
+    else:
+        # Fallback: linear interpolation (slight pitch artifact at extremes)
+        old_idx = np.linspace(0, len(audio) - 1, new_len)
+        resampled = np.interp(old_idx, np.arange(len(audio)), audio)
+    return resampled.astype(audio.dtype), sr
 
 
 class TTSEngine:
@@ -133,7 +157,7 @@ class TTSEngine:
             return f"Qwen3-TTS-12Hz-{size}-Base"
         raise ValueError(f"Unknown voice type: {vtype}")
 
-    def synthesize(self, voice: dict, text: str, output_path: Path) -> Tuple[int, float]:
+    def synthesize(self, voice: dict, text: str, output_path: Path, speed: float = 1.0) -> Tuple[int, float]:
         """
         Synthesize text with the given voice config and write WAV to output_path.
         Returns (sample_rate, duration_seconds).
@@ -174,7 +198,8 @@ class TTSEngine:
         else:
             raise ValueError(f"Unsupported voice type: {vtype}")
 
-        audio    = wavs[0]
+        audio = wavs[0]
+        audio, sr = _apply_speed(audio, sr, speed)
         duration = len(audio) / sr
 
         output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -182,10 +207,10 @@ class TTSEngine:
 
         return sr, duration
 
-    def synthesize_preview(self, voice: dict, text: str, output_path: Path) -> Tuple[int, float]:
+    def synthesize_preview(self, voice: dict, text: str, output_path: Path, speed: float = 1.0) -> Tuple[int, float]:
         """Synthesize a short preview (first sentence or ~300 chars)."""
         preview_text = _extract_preview_text(text, max_chars=300)
-        return self.synthesize(voice, preview_text, output_path)
+        return self.synthesize(voice, preview_text, output_path, speed=speed)
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────

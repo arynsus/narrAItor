@@ -98,6 +98,7 @@ class ChapterUpdate(BaseModel):
     title:        Optional[str] = None
     text:         Optional[str] = None
     voice_id:     Optional[str] = None
+    speed:        Optional[float] = None
     clear_audio:  Optional[bool] = False
 
 class ReorderRequest(BaseModel):
@@ -304,6 +305,8 @@ async def generate_chapter(chapter_id: str, preview: bool = False):
     if not project_id:
         raise HTTPException(500, "Cannot determine project for chapter")
 
+    speed = max(0.25, min(4.0, float(chapter.get("speed") or 1.0)))
+
     async def gen():
         yield _sse({"status": "generating", "message": "Loading AI model…"})
 
@@ -311,13 +314,18 @@ async def generate_chapter(chapter_id: str, preview: bool = False):
 
         try:
             store.update_chapter(chapter_id, {"status": "generating"})
-            yield _sse({"status": "generating", "message": "Synthesising speech…"})
+            speed_label = f" at {speed:.2f}×" if abs(speed - 1.0) > 0.02 else ""
+            yield _sse({"status": "generating", "message": f"Synthesising speech{speed_label}…"})
 
             loop = asyncio.get_event_loop()
             if preview:
-                sr, dur = await loop.run_in_executor(None, tts.synthesize_preview, voice, text, out_path)
+                sr, dur = await loop.run_in_executor(
+                    None, lambda: tts.synthesize_preview(voice, text, out_path, speed=speed)
+                )
             else:
-                sr, dur = await loop.run_in_executor(None, tts.synthesize, voice, text, out_path)
+                sr, dur = await loop.run_in_executor(
+                    None, lambda: tts.synthesize(voice, text, out_path, speed=speed)
+                )
 
             store.set_chapter_audio(chapter_id, out_path, dur, preview)
 

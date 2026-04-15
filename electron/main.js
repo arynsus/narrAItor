@@ -144,6 +144,14 @@ function createWindow() {
     if (isDev) mainWindow.webContents.openDevTools();
   });
 
+  // Push the current Python status to the renderer as soon as its DOM is ready
+  // (i.e. right after DOMContentLoaded, when the onPythonStatus listener is set up).
+  // This ensures we never miss events that fired while the page was still loading.
+  mainWindow.webContents.on('dom-ready', () => {
+    const status = serverReady ? 'ready' : (pythonProcess ? 'starting' : 'connecting');
+    mainWindow.webContents.send('python-status', { status });
+  });
+
   mainWindow.on('closed', () => { mainWindow = null; });
 }
 
@@ -202,7 +210,17 @@ app.whenReady().then(async () => {
   createWindow();
 
   const cfg = readConfig();
-  const pythonPath = cfg.pythonPath || 'python';
+  let pythonPath = cfg.pythonPath;
+  if (!pythonPath) {
+    const venvPath = path.join(__dirname, '..', '.venv', 'bin', 'python');
+    if (fs.existsSync(venvPath)) {
+      pythonPath = venvPath;
+    } else {
+      // Windows fallback if venv is created differently
+      const venvWinPath = path.join(__dirname, '..', '.venv', 'Scripts', 'python.exe');
+      pythonPath = fs.existsSync(venvWinPath) ? venvWinPath : 'python';
+    }
+  }
   // Start server in background — window will show startup status
   startPythonServer(pythonPath).catch(() => {});
 });

@@ -1,6 +1,9 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
+  // Runtime info
+  platform: process.platform,
+
   // Config
   configGet: (key) => ipcRenderer.invoke('config-get', key),
   configSet: (key, value) => ipcRenderer.invoke('config-set', key, value),

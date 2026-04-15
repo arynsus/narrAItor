@@ -2,7 +2,7 @@
 
 const App = (() => {
   const state = {
-    page: 'books',
+    page: null,
     params: {},
     pythonStatus: 'connecting',
     voices: null,
@@ -52,7 +52,7 @@ const App = (() => {
       if (!crumb) {
         crumb = document.createElement('div');
         crumb.id = 'booth-breadcrumb';
-        crumb.className = 'flex items-center gap-1 text-xs font-label text-muted';
+        crumb.className = 'flex items-center gap-1 text-xs font-label text-muted ml-4';
         document.getElementById('top-nav').insertBefore(crumb, document.getElementById('top-nav').children[1]);
       }
       crumb.innerHTML = `
@@ -98,18 +98,39 @@ const App = (() => {
   // ── Init ───────────────────────────────────────────────────────────────────
 
   function init() {
-    // Listen for Python status updates from main process
+    // Listen for Python status events pushed from main process
     window.electronAPI.onPythonStatus((status) => {
       setPythonStatus(status.status);
+      // When the server comes up, reload library data if it's currently showing
+      if (status.status === 'ready' && state.page === 'books') {
+        BooksPage.refresh?.();
+      }
       if (status.status === 'error') {
         Toast.error('AI engine failed to start. Check Settings to configure your Python environment.');
       }
     });
 
-    // Initial server state
-    window.electronAPI.getServerReady().then(ready => {
-      setPythonStatus(ready ? 'ready' : 'starting');
-    });
+    // Polling fallback — handles all event-timing edge cases.
+    // Immediately checks the actual server state and retries every 2 s until ready.
+    (function pollStatus() {
+      window.electronAPI.getServerReady().then(ready => {
+        if (ready) {
+          setPythonStatus('ready');
+          if (state.page === 'books') BooksPage.refresh?.();
+        } else {
+          if (state.pythonStatus === 'connecting') setPythonStatus('starting');
+          setTimeout(pollStatus, 2000);
+        }
+      }).catch(() => setTimeout(pollStatus, 3000));
+    })();
+
+    // On macOS with hiddenInset titlebar the traffic-light buttons (×−□)
+    // occupy ~72–80 px from the left edge. Use process.platform (via preload)
+    // for a reliable check, and shift nav content out of their way.
+    if (window.electronAPI.platform === 'darwin') {
+      const nav = document.getElementById('top-nav');
+      if (nav) nav.style.paddingLeft = '88px';
+    }
 
     // Navigate to default page
     navigate('books');
