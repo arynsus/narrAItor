@@ -68,6 +68,9 @@ const App = (() => {
   // ── Python status ──────────────────────────────────────────────────────────
 
   function setPythonStatus(status) {
+    // Only update if status actually changed to avoid unnecessary DOM updates
+    if (state.pythonStatus === status) return;
+
     state.pythonStatus = status;
     const dot = document.getElementById('server-status-dot');
     if (!dot) return;
@@ -112,13 +115,21 @@ const App = (() => {
 
     // Polling fallback — handles all event-timing edge cases.
     // Immediately checks the actual server state and retries every 2 s until ready.
+    let pollAttemptsInStarting = 0;
     (function pollStatus() {
       window.electronAPI.getServerReady().then(ready => {
         if (ready) {
+          pollAttemptsInStarting = 0;
           setPythonStatus('ready');
           if (state.page === 'books') BooksPage.refresh?.();
         } else {
-          if (state.pythonStatus === 'connecting') setPythonStatus('starting');
+          // Transition from 'connecting' to 'starting' on first non-ready poll
+          if (state.pythonStatus === 'connecting') {
+            pollAttemptsInStarting = 1;
+            setPythonStatus('starting');
+          } else {
+            pollAttemptsInStarting++;
+          }
           setTimeout(pollStatus, 2000);
         }
       }).catch(() => setTimeout(pollStatus, 3000));
@@ -127,9 +138,10 @@ const App = (() => {
     // On macOS with hiddenInset titlebar the traffic-light buttons (×−□)
     // occupy ~72–80 px from the left edge. Use process.platform (via preload)
     // for a reliable check, and shift nav content out of their way.
+    // Use 110px to account for various macOS versions and window chrome variations.
     if (window.electronAPI.platform === 'darwin') {
       const nav = document.getElementById('top-nav');
-      if (nav) nav.style.paddingLeft = '88px';
+      if (nav) nav.style.paddingLeft = '110px';
     }
 
     // Navigate to default page

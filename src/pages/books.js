@@ -6,6 +6,7 @@ const BooksPage = (() => {
 
   let projects = [];
   let coverFiles = {}; // { pending cover file before save }
+  let loadAttemptsFromStart = 0; // Track if this is the first load attempt
 
   // ── Render ─────────────────────────────────────────────────────────────────
 
@@ -244,6 +245,7 @@ const BooksPage = (() => {
     try {
       const res = await API.projects.list();
       projects = res.projects || [];
+      loadAttemptsFromStart = 0; // Reset on success
 
       if (projects.length === 0) {
         grid.innerHTML = renderEmptyState();
@@ -252,7 +254,19 @@ const BooksPage = (() => {
         grid.innerHTML = projects.map(p => `<div class="group">${renderBookCard(p)}</div>`).join('');
       }
     } catch (err) {
-      grid.innerHTML = `<div class="col-span-full py-12 text-center text-sm text-error">Could not load library. Is the AI engine running?</div>`;
+      // On first load attempt, show "waiting for AI engine" instead of error
+      // This handles the common case where the server is still starting
+      if (loadAttemptsFromStart === 0) {
+        loadAttemptsFromStart++;
+        grid.innerHTML = `
+          <div class="col-span-full flex items-center justify-center gap-3 py-16 text-muted">
+            ${spinnerHTML(24)} Waiting for AI engine…
+          </div>
+        `;
+      } else {
+        // On retry or subsequent failures, show the error
+        grid.innerHTML = `<div class="col-span-full py-12 text-center text-sm text-error">Could not load library. Is the AI engine running?</div>`;
+      }
     }
   }
 
