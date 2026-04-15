@@ -12,6 +12,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getDataDir: () => ipcRenderer.invoke('get-data-dir'),
   getServerPort: () => ipcRenderer.invoke('get-server-port'),
   getServerReady: () => ipcRenderer.invoke('get-server-ready'),
+  getAppVersion: () => ipcRenderer.invoke('get-app-version'),
 
   // Dialogs
   openFileDialog: (options) => ipcRenderer.invoke('open-file-dialog', options),

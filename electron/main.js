@@ -169,6 +169,7 @@ ipcMain.handle('config-set', (_, key, value) => {
 ipcMain.handle('get-data-dir', () => narrAItorDataDir);
 ipcMain.handle('get-server-port', () => SERVER_PORT);
 ipcMain.handle('get-server-ready', () => serverReady);
+ipcMain.handle('get-app-version', () => app.getVersion());
 
 ipcMain.handle('open-file-dialog', async (_, options) => {
   const result = await dialog.showOpenDialog(mainWindow, options);

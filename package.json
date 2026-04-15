@@ -1,6 +1,6 @@
 {
   "name": "narraitor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AI-powered local audiobook generation using Qwen3-TTS",
   "main": "electron/main.js",
   "scripts": {

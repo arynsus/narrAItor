@@ -157,6 +157,11 @@ const SettingsPage = (() => {
             </div>
           </section>
 
+          <!-- App Info -->
+          <section class="pt-6 border-t border-outline-variant/20">
+            <p class="text-xs text-subtle font-label">narrAItor <span id="app-version">v1.0.0</span></p>
+          </section>
+
         </div>
       </div>
     `;
@@ -219,6 +224,13 @@ const SettingsPage = (() => {
   // ── Mount ──────────────────────────────────────────────────────────────────
 
   async function mount() {
+    // Load app version
+    try {
+      const version = await window.electronAPI.getAppVersion();
+      const versionEl = document.getElementById('app-version');
+      if (versionEl) versionEl.textContent = `v${version}`;
+    } catch {}
+
     // Load saved config
     const cfg = await window.electronAPI.configGet();
     if (cfg.pythonPath) document.getElementById('python-path-input').value = cfg.pythonPath;
