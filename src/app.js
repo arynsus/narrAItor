@@ -138,10 +138,21 @@ const App = (() => {
     // On macOS with hiddenInset titlebar the traffic-light buttons (×−□)
     // occupy ~72–80 px from the left edge. Use process.platform (via preload)
     // for a reliable check, and shift nav content out of their way.
-    // Use 110px to account for various macOS versions and window chrome variations.
     if (window.electronAPI.platform === 'darwin') {
       const nav = document.getElementById('top-nav');
-      if (nav) nav.style.paddingLeft = '110px';
+
+      function updateNavPadding() {
+        // Remove padding in fullscreen mode (buttons are hidden)
+        const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement;
+        if (nav) nav.style.paddingLeft = isFullscreen ? '0' : '88px';
+      }
+
+      if (nav) {
+        updateNavPadding();
+        // Listen for fullscreen changes
+        document.addEventListener('fullscreenchange', updateNavPadding);
+        document.addEventListener('webkitfullscreenchange', updateNavPadding);
+      }
     }
 
     // Navigate to default page
