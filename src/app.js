@@ -140,18 +140,29 @@ const App = (() => {
     // for a reliable check, and shift nav content out of their way.
     if (window.electronAPI.platform === 'darwin') {
       const nav = document.getElementById('top-nav');
+      console.log('[App.init] macOS detected, setting up nav padding. nav element:', nav);
 
       function updateNavPadding() {
-        // Remove padding in fullscreen mode (buttons are hidden)
         const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement;
-        if (nav) nav.style.paddingLeft = isFullscreen ? '0' : '88px';
+        const newPadding = isFullscreen ? '0' : '88px';
+        console.log('[updateNavPadding] fullscreenElement:', document.fullscreenElement, 'webkitFullscreenElement:', document.webkitFullscreenElement, 'isFullscreen:', isFullscreen, 'setting padding to:', newPadding);
+        if (nav) {
+          nav.style.paddingLeft = newPadding;
+          console.log('[updateNavPadding] padding updated, current paddingLeft:', nav.style.paddingLeft);
+        }
       }
 
       if (nav) {
         updateNavPadding();
-        // Listen for fullscreen changes
-        document.addEventListener('fullscreenchange', updateNavPadding);
-        document.addEventListener('webkitfullscreenchange', updateNavPadding);
+        document.addEventListener('fullscreenchange', () => {
+          console.log('[fullscreenchange event] fired');
+          updateNavPadding();
+        });
+        document.addEventListener('webkitfullscreenchange', () => {
+          console.log('[webkitfullscreenchange event] fired');
+          updateNavPadding();
+        });
+        console.log('[App.init] fullscreen event listeners attached');
       }
     }
 
