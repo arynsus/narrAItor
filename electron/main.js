@@ -141,11 +141,9 @@ function createWindow() {
 
   // Send fullscreen state changes to renderer
   mainWindow.on('enter-full-screen', () => {
-    console.log('[Main] Window entered fullscreen');
     mainWindow.webContents.send('window-fullscreen-changed', { isFullscreen: true });
   });
   mainWindow.on('leave-full-screen', () => {
-    console.log('[Main] Window left fullscreen');
     mainWindow.webContents.send('window-fullscreen-changed', { isFullscreen: false });
   });
 

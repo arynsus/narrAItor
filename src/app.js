@@ -10,9 +10,9 @@ const App = (() => {
 
   const PAGES = {
     settings: typeof SettingsPage !== 'undefined' ? SettingsPage : null,
-    casting:  typeof CastingPage  !== 'undefined' ? CastingPage  : null,
-    books:    typeof BooksPage    !== 'undefined' ? BooksPage    : null,
-    booth:    typeof BoothPage    !== 'undefined' ? BoothPage    : null,
+    casting: typeof CastingPage !== 'undefined' ? CastingPage : null,
+    books: typeof BooksPage !== 'undefined' ? BooksPage : null,
+    booth: typeof BoothPage !== 'undefined' ? BoothPage : null,
   };
 
   let currentPageModule = null;
@@ -44,6 +44,12 @@ const App = (() => {
     container.innerHTML = `<div class="h-full page-enter" id="page-root">${mod.render(params)}</div>`;
     currentPageModule = mod;
     mod.mount?.(params);
+
+    // If navigating to books and server is already ready, trigger a refresh
+    // This handles the case where the server becomes ready before navigate() is called
+    if (page === 'books' && state.pythonStatus === 'ready') {
+      setTimeout(() => BooksPage.refresh?.(), 100);
+    }
   }
 
   function updateBoothBreadcrumb(page, params) {
@@ -76,7 +82,7 @@ const App = (() => {
     if (!dot) return;
 
     const classes = { connecting: 'dot-connecting', starting: 'dot-starting', ready: 'dot-ready', error: 'dot-error', stopped: 'dot-stopped' };
-    const titles  = { connecting: 'Connecting to AI engine…', starting: 'AI engine starting…', ready: 'AI engine ready', error: 'AI engine error — check Settings', stopped: 'AI engine stopped — check Settings' };
+    const titles = { connecting: 'Connecting to AI engine…', starting: 'AI engine starting…', ready: 'AI engine ready', error: 'AI engine error — check Settings', stopped: 'AI engine stopped — check Settings' };
 
     dot.className = `server-dot ${classes[status] || 'dot-stopped'}`;
     dot.title = titles[status] || status;
@@ -140,7 +146,6 @@ const App = (() => {
     // for a reliable check, and shift nav content out of their way.
     if (window.electronAPI.platform === 'darwin') {
       const nav = document.getElementById('top-nav');
-      console.log('[App.init] macOS detected, setting up nav padding. nav element:', nav);
 
       async function updateNavPadding() {
         // Get the actual fullscreen state from Electron main process
@@ -149,11 +154,8 @@ const App = (() => {
         const shouldRemovePadding = isElectronFullscreen || isHtmlFullscreen;
         const newPadding = shouldRemovePadding ? '0' : '88px';
 
-        console.log('[updateNavPadding] Electron fullscreen:', isElectronFullscreen, 'HTML5 fullscreen:', isHtmlFullscreen, 'combined:', shouldRemovePadding, 'setting padding to:', newPadding);
-
         if (nav) {
           nav.style.paddingLeft = newPadding;
-          console.log('[updateNavPadding] padding updated to:', nav.style.paddingLeft);
         }
       }
 
@@ -162,21 +164,12 @@ const App = (() => {
 
         // Listen for Electron window fullscreen changes
         window.electronAPI.onWindowFullscreenChanged((data) => {
-          console.log('[window-fullscreen-changed event] fired, isFullscreen:', data.isFullscreen);
           updateNavPadding();
         });
 
         // Listen for HTML5 fullscreen changes
-        document.addEventListener('fullscreenchange', () => {
-          console.log('[fullscreenchange event] fired');
-          updateNavPadding();
-        });
-        document.addEventListener('webkitfullscreenchange', () => {
-          console.log('[webkitfullscreenchange event] fired');
-          updateNavPadding();
-        });
-
-        console.log('[App.init] fullscreen event listeners attached');
+        document.addEventListener('fullscreenchange', updateNavPadding);
+        document.addEventListener('webkitfullscreenchange', updateNavPadding);
       }
     }
 
