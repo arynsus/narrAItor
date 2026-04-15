@@ -152,7 +152,7 @@ const App = (() => {
   }
 
   // Public API
-  return { navigate, setPythonStatus, loadVoices, getVoices, invalidateVoices, state };
+  return { init, navigate, setPythonStatus, loadVoices, getVoices, invalidateVoices, state };
 })();
 
 document.addEventListener('DOMContentLoaded', () => App.init());
