@@ -139,6 +139,16 @@ function createWindow() {
 
   mainWindow.loadFile(path.join(__dirname, '..', 'src', 'index.html'));
 
+  // Send fullscreen state changes to renderer
+  mainWindow.on('enter-full-screen', () => {
+    console.log('[Main] Window entered fullscreen');
+    mainWindow.webContents.send('window-fullscreen-changed', { isFullscreen: true });
+  });
+  mainWindow.on('leave-full-screen', () => {
+    console.log('[Main] Window left fullscreen');
+    mainWindow.webContents.send('window-fullscreen-changed', { isFullscreen: false });
+  });
+
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
     if (isDev) mainWindow.webContents.openDevTools();
@@ -170,6 +180,7 @@ ipcMain.handle('get-data-dir', () => narrAItorDataDir);
 ipcMain.handle('get-server-port', () => SERVER_PORT);
 ipcMain.handle('get-server-ready', () => serverReady);
 ipcMain.handle('get-app-version', () => app.getVersion());
+ipcMain.handle('get-window-fullscreen', () => mainWindow?.isFullScreen() ?? false);
 
 ipcMain.handle('open-file-dialog', async (_, options) => {
   const result = await dialog.showOpenDialog(mainWindow, options);

@@ -13,6 +13,12 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getServerPort: () => ipcRenderer.invoke('get-server-port'),
   getServerReady: () => ipcRenderer.invoke('get-server-ready'),
   getAppVersion: () => ipcRenderer.invoke('get-app-version'),
+  getWindowFullscreen: () => ipcRenderer.invoke('get-window-fullscreen'),
+  onWindowFullscreenChanged: (callback) => {
+    const handler = (_, data) => callback(data);
+    ipcRenderer.on('window-fullscreen-changed', handler);
+    return () => ipcRenderer.removeListener('window-fullscreen-changed', handler);
+  },
 
   // Dialogs
   openFileDialog: (options) => ipcRenderer.invoke('open-file-dialog', options),

@@ -142,14 +142,14 @@ const App = (() => {
       const nav = document.getElementById('top-nav');
       console.log('[App.init] macOS detected, setting up nav padding. nav element:', nav);
 
-      function updateNavPadding() {
-        // Check both HTML5 fullscreen and window.innerHeight (Electron fullscreen detection)
-        const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement;
-        const isElectronFullscreen = window.innerHeight === screen.height && window.innerWidth === screen.width;
-        const shouldRemovePadding = isFullscreen || isElectronFullscreen;
+      async function updateNavPadding() {
+        // Get the actual fullscreen state from Electron main process
+        const isElectronFullscreen = await window.electronAPI.getWindowFullscreen();
+        const isHtmlFullscreen = document.fullscreenElement || document.webkitFullscreenElement;
+        const shouldRemovePadding = isElectronFullscreen || isHtmlFullscreen;
         const newPadding = shouldRemovePadding ? '0' : '88px';
 
-        console.log('[updateNavPadding] HTML5 fullscreen:', isFullscreen, 'Electron fullscreen:', isElectronFullscreen, 'combined:', shouldRemovePadding, 'setting padding to:', newPadding);
+        console.log('[updateNavPadding] Electron fullscreen:', isElectronFullscreen, 'HTML5 fullscreen:', isHtmlFullscreen, 'combined:', shouldRemovePadding, 'setting padding to:', newPadding);
 
         if (nav) {
           nav.style.paddingLeft = newPadding;
@@ -160,6 +160,12 @@ const App = (() => {
       if (nav) {
         updateNavPadding();
 
+        // Listen for Electron window fullscreen changes
+        window.electronAPI.onWindowFullscreenChanged((data) => {
+          console.log('[window-fullscreen-changed event] fired, isFullscreen:', data.isFullscreen);
+          updateNavPadding();
+        });
+
         // Listen for HTML5 fullscreen changes
         document.addEventListener('fullscreenchange', () => {
           console.log('[fullscreenchange event] fired');
@@ -167,12 +173,6 @@ const App = (() => {
         });
         document.addEventListener('webkitfullscreenchange', () => {
           console.log('[webkitfullscreenchange event] fired');
-          updateNavPadding();
-        });
-
-        // Listen for window resize (catches Electron fullscreen mode)
-        window.addEventListener('resize', () => {
-          console.log('[resize event] fired - window size:', window.innerWidth, 'x', window.innerHeight, 'screen size:', screen.width, 'x', screen.height);
           updateNavPadding();
         });
 
