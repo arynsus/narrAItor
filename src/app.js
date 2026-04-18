@@ -152,7 +152,7 @@ const App = (() => {
         const isElectronFullscreen = await window.electronAPI.getWindowFullscreen();
         const isHtmlFullscreen = document.fullscreenElement || document.webkitFullscreenElement;
         const shouldRemovePadding = isElectronFullscreen || isHtmlFullscreen;
-        const newPadding = shouldRemovePadding ? '0' : '88px';
+        const newPadding = shouldRemovePadding ? '20px' : '88px';
 
         if (nav) {
           nav.style.paddingLeft = newPadding;

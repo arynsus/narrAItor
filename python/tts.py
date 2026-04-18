@@ -69,7 +69,7 @@ class TTSEngine:
 
     def is_model_available(self, model_name: str) -> bool:
         path = self._model_path(model_name)
-        return path.exists() and any(path.iterdir())
+        return _has_model_weights(path)
 
     def _get_device(self) -> str:
         _import_deps()
@@ -220,6 +220,18 @@ def _instruct_kwargs(instruct: Optional[str]) -> dict:
     if instruct and instruct.strip():
         return {"instruct": instruct.strip()}
     return {}
+
+
+_WEIGHT_FILES = (
+    "model.safetensors",
+    "model.safetensors.index.json",
+    "pytorch_model.bin",
+    "pytorch_model.bin.index.json",
+)
+
+def _has_model_weights(path: Path) -> bool:
+    """Return True only when the model directory contains actual weight files at its root."""
+    return path.is_dir() and any((path / f).exists() for f in _WEIGHT_FILES)
 
 
 def _extract_preview_text(text: str, max_chars: int = 300) -> str:

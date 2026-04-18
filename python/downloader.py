@@ -82,7 +82,7 @@ class ModelManager:
         result = []
         for m in MODELS:
             local_dir = self.models_dir / m["id"]
-            downloaded = local_dir.exists() and any(local_dir.iterdir())
+            downloaded = _has_model_weights(local_dir)
             size_bytes = _dir_size(local_dir) if downloaded else 0
             result.append({
                 "id":          m["id"],
@@ -201,6 +201,18 @@ def _download_modelscope(repo_id: str, local_dir: Path, cancel_event: threading.
 
 
 # ── Utilities ─────────────────────────────────────────────────────────────────
+
+_WEIGHT_FILES = (
+    "model.safetensors",
+    "model.safetensors.index.json",
+    "pytorch_model.bin",
+    "pytorch_model.bin.index.json",
+)
+
+def _has_model_weights(path: Path) -> bool:
+    """Return True only when the model directory contains actual weight files at its root."""
+    return path.is_dir() and any((path / f).exists() for f in _WEIGHT_FILES)
+
 
 def _dir_size(path: Path) -> int:
     total = 0
